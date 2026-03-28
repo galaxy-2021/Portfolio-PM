@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rida Siddiqi — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #FAFAF8; --surface: #FFFFFF; --ink: #1A1A1A; --ink-secondary: #5A5A58; --ink-tertiary: #8A8A86;
+  --accent: #C45D3E; --accent-light: #F4E8E3; --accent-dark: #A04830;
+  --border: #E8E8E4; --border-hover: #D0D0CC; --tag-bg: #F0F0EC;
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.06); --radius-sm: 6px; --radius-md: 12px;
+  --font-display: 'DM Serif Display', Georgia, serif; --font-body: 'DM Sans', -apple-system, sans-serif; --font-mono: 'JetBrains Mono', monospace;
+  --max-w: 1080px; --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--ink); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+
+.site-header { position: sticky; top: 0; z-index: 100; background: rgba(250,250,248,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+.header-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.site-logo { font-family: var(--font-display); font-size: 1.25rem; color: var(--ink); text-decoration: none; letter-spacing: -0.02em; }
+.site-logo span { color: var(--accent); }
+.tab-nav { display: flex; gap: 0.25rem; }
+.tab-btn { font-family: var(--font-body); font-size: 0.82rem; font-weight: 500; color: var(--ink-secondary); background: none; border: none; padding: 0.5rem 1rem; cursor: pointer; border-radius: var(--radius-sm); transition: all 0.2s var(--ease); letter-spacing: 0.01em; }
+.tab-btn:hover { color: var(--ink); background: var(--tag-bg); }
+.tab-btn.active { color: var(--accent-dark); background: var(--accent-light); font-weight: 600; }
+
+.hero { max-width: var(--max-w); margin: 0 auto; padding: 5rem 2rem 3rem; }
+.hero-eyebrow { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 1rem; }
+.hero h1 { font-family: var(--font-display); font-size: clamp(2.4rem, 5vw, 3.6rem); line-height: 1.15; letter-spacing: -0.025em; max-width: 700px; margin-bottom: 1.5rem; }
+.hero-desc { font-size: 1.05rem; color: var(--ink-secondary); max-width: 600px; line-height: 1.7; margin-bottom: 2rem; }
+.hero-links { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.hero-link { font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink-secondary); text-decoration: none; padding: 0.4rem 0.9rem; border: 1px solid var(--border); border-radius: 100px; transition: all 0.2s var(--ease); }
+.hero-link:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+
+.main { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem 6rem; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; animation: fadeUp 0.4s var(--ease) both; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+.section-label { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 0.5rem; }
+.section-title { font-family: var(--font-display); font-size: 1.8rem; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+.section-desc { color: var(--ink-secondary); font-size: 0.95rem; max-width: 560px; margin-bottom: 2.5rem; line-height: 1.7; }
+.section-block { margin-bottom: 4rem; }
+
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.75rem; transition: all 0.3s var(--ease); overflow: hidden; }
+.card:hover { border-color: var(--border-hover); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.card-icon { width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--accent-light); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; font-family: var(--font-mono); margin-bottom: 1rem; }
+.card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.5rem; letter-spacing: -0.01em; }
+.card p { font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.65; margin-bottom: 1rem; }
+.card-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.tag { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 500; color: var(--ink-tertiary); background: var(--tag-bg); padding: 0.2rem 0.6rem; border-radius: 100px; letter-spacing: 0.02em; }
+.tag.accent { background: var(--accent-light); color: var(--accent-dark); }
+
+/* Carousel */
+.carousel-wrapper { position: relative; overflow: hidden; }
+.carousel-track { display: flex; transition: transform 0.5s var(--ease); }
+.carousel-slide { min-width: 100%; padding: 0 0.5rem; }
+.carousel-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
+.carousel-dots { display: flex; gap: 0.5rem; }
+.carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); border: none; cursor: pointer; transition: all 0.2s var(--ease); }
+.carousel-dot.active { background: var(--accent); width: 24px; border-radius: 4px; }
+.carousel-arrows { display: flex; gap: 0.5rem; }
+.carousel-arrow { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--ink-secondary); transition: all 0.2s var(--ease); }
+.carousel-arrow:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+.carousel-arrow:disabled { opacity: 0.3; cursor: default; }
+.carousel-arrow:disabled:hover { border-color: var(--border); color: var(--ink-secondary); background: var(--surface); }
+.slide-counter { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-tertiary); }
+
+/* Teardown cards */
+.teardown-full { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+.teardown-top { padding: 2rem 2rem 1.25rem; border-bottom: 1px solid var(--border); }
+.teardown-top h3 { font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 0.25rem; }
+.teardown-top .subtitle { font-size: 0.85rem; color: var(--ink-tertiary); margin-bottom: 1rem; }
+.teardown-top .product-context { font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.65; }
+.teardown-body { padding: 1.5rem 2rem 2rem; }
+.teardown-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.teardown-section { margin-bottom: 1.25rem; }
+.teardown-section:last-child { margin-bottom: 0; }
+.teardown-section h4 { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+.teardown-section p, .teardown-section ul { font-size: 0.85rem; color: var(--ink-secondary); line-height: 1.65; }
+.teardown-section ul { padding-left: 1.1rem; }
+.teardown-section li { margin-bottom: 0.35rem; }
+
+/* Timeline */
+.timeline { position: relative; padding-left: 2rem; }
+.timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; background: var(--border); }
+.timeline-item { position: relative; margin-bottom: 2.5rem; }
+.timeline-item:last-child { margin-bottom: 0; }
+.timeline-item::before { content: ''; position: absolute; left: -2rem; top: 8px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); box-shadow: 0 0 0 2px var(--accent); transform: translateX(-4px); }
+.timeline-date { font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent); letter-spacing: 0.04em; margin-bottom: 0.35rem; }
+.timeline-item h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.15rem; }
+.timeline-item .role { font-size: 0.85rem; color: var(--ink-secondary); font-style: italic; margin-bottom: 0.6rem; }
+.timeline-item ul { list-style: none; padding: 0; }
+.timeline-item li { font-size: 0.85rem; color: var(--ink-secondary); padding-left: 1rem; position: relative; margin-bottom: 0.4rem; line-height: 1.6; }
+.timeline-item li::before { content: '\2014'; position: absolute; left: 0; color: var(--border-hover); }
+
+.insight-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+.insight-stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem; text-align: center; transition: all 0.2s var(--ease); }
+.insight-stat:hover { border-color: var(--accent); }
+.insight-stat .number { font-family: var(--font-display); font-size: 2rem; color: var(--accent); line-height: 1; margin-bottom: 0.35rem; }
+.insight-stat .label { font-size: 0.78rem; color: var(--ink-tertiary); }
+
+.method-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; margin-bottom: 2rem; }
+.method-badge { display: flex; align-items: center; gap: 0.45rem; font-size: 0.8rem; font-weight: 500; color: var(--ink-secondary); background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 0.45rem 1rem; transition: all 0.2s var(--ease); }
+.method-badge:hover { border-color: var(--accent); color: var(--accent); }
+.method-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+.callout { background: linear-gradient(135deg, var(--accent-light) 0%, #FFF8F5 100%); border: 1px solid #E8D0C8; border-radius: var(--radius-md); padding: 1.5rem 1.75rem; margin-top: 2rem; }
+.callout h4 { font-size: 0.95rem; font-weight: 600; color: var(--accent-dark); margin-bottom: 0.5rem; }
+.callout p { font-size: 0.85rem; color: var(--ink-secondary); line-height: 1.65; }
+.callout.blue { background: linear-gradient(135deg, #EEF2F7 0%, #F8FAFC 100%); border-color: #D0D8E4; }
+.callout.blue h4 { color: #3D5A80; }
+.callout.green { background: linear-gradient(135deg, #E8F5E8 0%, #F5FAF5 100%); border-color: #C8DCC8; }
+.callout.green h4 { color: #3D6B3D; }
+
+.framework-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.75rem; margin-bottom: 1.25rem; }
+.framework-block h4 { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+.framework-block p { font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.65; }
+
+sup.ref { font-family: var(--font-mono); font-size: 0.6rem; color: var(--accent); cursor: pointer; text-decoration: none; font-weight: 600; margin-left: 1px; }
+sup.ref:hover { text-decoration: underline; }
+.references { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+.references h3 { font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 1.25rem; }
+.ref-list { list-style: none; padding: 0; counter-reset: ref-counter; }
+.ref-list li { font-size: 0.78rem; color: var(--ink-secondary); line-height: 1.6; margin-bottom: 0.75rem; padding-left: 2rem; position: relative; }
+.ref-list li::before { counter-increment: ref-counter; content: counter(ref-counter) "."; position: absolute; left: 0; font-family: var(--font-mono); font-weight: 600; color: var(--accent); font-size: 0.72rem; }
+.ref-list a { color: var(--accent-dark); text-decoration: none; word-break: break-all; }
+.ref-list a:hover { text-decoration: underline; }
+
+.wip-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-family: var(--font-mono); font-size: 0.65rem; font-weight: 500; color: var(--accent); background: var(--accent-light); padding: 0.2rem 0.65rem; border-radius: 100px; letter-spacing: 0.04em; margin-left: 0.5rem; vertical-align: middle; }
+.wip-badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+.site-footer { max-width: var(--max-w); margin: 0 auto; padding: 2rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.site-footer p { font-size: 0.78rem; color: var(--ink-tertiary); }
+
+/* Section jump nav (research tab) */
+.section-nav { position: sticky; top: 64px; z-index: 50; background: rgba(250,250,248,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 0; margin: 0 -2rem 2rem; padding-left: 2rem; padding-right: 2rem; display: flex; gap: 0.35rem; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.section-nav::-webkit-scrollbar { display: none; }
+.section-nav a { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 500; color: var(--ink-tertiary); text-decoration: none; padding: 0.35rem 0.75rem; border-radius: 100px; border: 1px solid transparent; white-space: nowrap; transition: all 0.2s var(--ease); flex-shrink: 0; }
+.section-nav a:hover { color: var(--accent); border-color: var(--accent-light); background: var(--accent-light); }
+.section-nav a.active { color: var(--accent-dark); border-color: var(--accent); background: var(--accent-light); font-weight: 600; }
+
+/* Notion-style table */
+.notion-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+.notion-table th { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 500; color: var(--ink-tertiary); text-transform: uppercase; letter-spacing: 0.08em; text-align: left; padding: 0.6rem 0.75rem; border-bottom: 2px solid var(--border); white-space: nowrap; }
+.notion-table td { padding: 0.7rem 0.75rem; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--ink-secondary); line-height: 1.5; }
+.notion-table tr:hover td { background: var(--tag-bg); }
+.quote-cell { font-style: italic; font-size: 0.8rem; max-width: 320px; }
+.table-tag { font-family: var(--font-mono); font-size: 0.62rem; font-weight: 500; padding: 0.15rem 0.5rem; border-radius: 4px; white-space: nowrap; display: inline-block; }
+.table-tag.purple { background: #EDE9FE; color: #6D28D9; }
+.table-tag.blue { background: #DBEAFE; color: #1D4ED8; }
+.table-tag.orange { background: #FFF3E0; color: #C45D3E; }
+.table-tag.red { background: #FEE2E2; color: #B91C1C; }
+.table-tag.gray { background: var(--tag-bg); color: var(--ink-tertiary); }
+.table-tag.green-fill { background: #D1FAE5; color: #065F46; }
+.table-tag.orange-fill { background: #FFF3E0; color: #C45D3E; }
+.table-tag.red-fill { background: #FEE2E2; color: #B91C1C; }
+
+/* Interview modules (accordion) */
+.interview-modules { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+.interview-module { border-bottom: 1px solid var(--border); }
+.interview-module:last-child { border-bottom: none; }
+.module-header { display: flex; align-items: center; gap: 0.75rem; padding: 1rem 1.25rem; cursor: pointer; transition: background 0.15s; user-select: none; }
+.module-header:hover { background: var(--tag-bg); }
+.module-label { font-family: var(--font-mono); font-size: 0.62rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 0.15rem 0.5rem; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+.module-title { font-size: 0.92rem; font-weight: 600; color: var(--ink); flex: 1; }
+.module-toggle { font-family: var(--font-mono); font-size: 1rem; color: var(--ink-tertiary); transition: transform 0.2s; }
+.interview-module.open .module-toggle { transform: rotate(45deg); }
+.module-body { display: none; padding: 0 1.25rem 1.25rem; }
+.interview-module.open .module-body { display: block; }
+.module-goal { font-size: 0.82rem; color: var(--ink-secondary); margin-bottom: 0.75rem; line-height: 1.5; }
+.module-body ul { padding-left: 1.1rem; }
+.module-body li { font-size: 0.82rem; color: var(--ink-secondary); margin-bottom: 0.5rem; line-height: 1.55; }
+
+/* Theme cards */
+.theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; }
+.theme-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; transition: all 0.2s var(--ease); }
+.theme-card:hover { border-color: var(--border-hover); box-shadow: var(--shadow-md); }
+.theme-top { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+.theme-count { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 0.2rem 0.5rem; border-radius: 4px; }
+.theme-top h4 { font-size: 0.95rem; font-weight: 600; }
+.theme-card > p { font-size: 0.82rem; color: var(--ink-secondary); line-height: 1.6; margin-bottom: 0.75rem; }
+.theme-quotes { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 0.75rem; }
+.theme-quote { font-size: 0.78rem; font-style: italic; color: var(--ink-secondary); line-height: 1.5; padding-left: 0.75rem; border-left: 2px solid var(--accent-light); }
+.quote-attr { font-family: var(--font-mono); font-size: 0.62rem; font-weight: 600; color: var(--accent); font-style: normal; margin-right: 0.3rem; }
+.theme-implication { font-size: 0.78rem; color: var(--ink); line-height: 1.55; background: var(--tag-bg); padding: 0.6rem 0.75rem; border-radius: var(--radius-sm); }
+
+/* Persona cards */
+.persona-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; }
+.persona-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; transition: all 0.2s var(--ease); }
+.persona-card:hover { box-shadow: var(--shadow-md); }
+.persona-header { padding: 1rem 1.25rem; }
+.persona-header.eager { background: linear-gradient(135deg, #D1FAE5, #ECFDF5); border-bottom: 2px solid #34D399; }
+.persona-header.cautious { background: linear-gradient(135deg, #FFF3E0, #FFF8F0); border-bottom: 2px solid var(--accent); }
+.persona-header.skeptic { background: linear-gradient(135deg, #EDE9FE, #F5F3FF); border-bottom: 2px solid #8B5CF6; }
+.persona-type { font-family: var(--font-mono); font-size: 0.62rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-tertiary); }
+.persona-header h4 { font-size: 1rem; font-weight: 600; margin-top: 0.2rem; }
+.persona-body { padding: 1.25rem; }
+.persona-desc { font-size: 0.82rem; color: var(--ink-secondary); line-height: 1.6; margin-bottom: 0.75rem; }
+.persona-detail { font-size: 0.78rem; color: var(--ink-secondary); line-height: 1.5; margin-bottom: 0.4rem; }
+
+@media (max-width: 700px) {
+  .header-inner { flex-direction: column; height: auto; padding: 0.75rem 1rem; gap: 0.5rem; }
+  .tab-nav { overflow-x: auto; width: 100%; justify-content: flex-start; padding-bottom: 0.25rem; }
+  .tab-btn { white-space: nowrap; font-size: 0.78rem; padding: 0.4rem 0.75rem; }
+  .hero { padding: 3rem 1.25rem 2rem; }
+  .hero h1 { font-size: 2rem; }
+  .main { padding: 0 1.25rem 4rem; }
+  .card-grid { grid-template-columns: 1fr; }
+  .teardown-cols { grid-template-columns: 1fr; }
+  .insight-grid { grid-template-columns: repeat(2, 1fr); }
+  .site-footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  .teardown-top, .teardown-body { padding-left: 1.25rem; padding-right: 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header"><div class="header-inner">
+  <a href="#" class="site-logo">Rida<span>.</span></a>
+  <nav class="tab-nav">
+    <button class="tab-btn active" data-tab="about">About</button>
+    <button class="tab-btn" data-tab="projects">Projects</button>
+    <button class="tab-btn" data-tab="leadership">Leadership</button>
+    <button class="tab-btn" data-tab="teardowns">Product Teardowns</button>
+    <button class="tab-btn" data-tab="research">User Research</button>
+  </nav>
+</div></header>
+
+<section class="hero">
+  <p class="hero-eyebrow">Physics · Product · Impact</p>
+  <h1>From physics to product — applying scientific thinking to AI & real-world impact.</h1>
+  <p class="hero-desc">Recent B.S. Physics graduate from UT Austin with experience driving initiatives across teams, building and scaling community-driven programs, and translating complex technical concepts for diverse audiences.</p>
+  <div class="hero-links">
+    <a href="mailto:siddiqirida3@gmail.com" class="hero-link">Email</a>
+    <a href="#" class="hero-link">GitHub</a>
+    <a href="#" class="hero-link">LinkedIn</a>
+    <a href="#" class="hero-link">Resume</a>
+  </div>
+</section>
+
+<main class="main">
+
+<!-- ABOUT -->
+<div class="tab-panel active" id="about">
+  <div class="section-block"><p class="section-label">Background</p><h2 class="section-title">Physics to Product</h2><p class="section-desc">Four years of applying the physicist's toolkit — hypothesis-driven thinking, experimental iteration, data analysis — to building programs and communities. Now channeling that into product management.</p></div>
+  <div class="section-block"><p class="section-label">Education</p><h2 class="section-title">The University of Texas at Austin</h2>
+    <div style="color:var(--ink-secondary); font-size:0.92rem; margin-bottom:1.5rem; line-height:1.7;"><strong style="color:var(--ink)">B.S. Physics</strong>, Certificate in Elements of Computing · May 2026<br><strong style="color:var(--ink)">B.S.A. Astronomy</strong>, Certificate in Applied Statistical Modeling</div>
+    <div class="card-tags" style="margin-bottom:1.5rem;"><span class="tag">Biophysics (Graduate)</span><span class="tag">Computational Physics</span><span class="tag">Fine Tuning LLMs</span><span class="tag">Data Visualization</span><span class="tag">Databases</span><span class="tag">Applied Stats</span><span class="tag">SWE</span></div>
+  </div>
+  <div class="section-block"><p class="section-label">Skills</p><h2 class="section-title">What I Work With</h2>
+    <div class="card-grid">
+      <div class="card"><div class="card-icon">T</div><h3>Technical</h3><p>Python, R, data visualization and analysis, machine learning, databases, cloud platforms (AWS, Google Cloud).</p><div class="card-tags"><span class="tag">Python</span><span class="tag">R</span><span class="tag">ML</span><span class="tag">AWS</span><span class="tag">SQL</span></div></div>
+      <div class="card"><div class="card-icon">P</div><h3>Interpersonal</h3><p>Program management, cross-functional coordination, mentorship, public speaking, science communication, user research.</p><div class="card-tags"><span class="tag">Program Mgmt</span><span class="tag">User Research</span><span class="tag">Communication</span></div></div>
+    </div>
+  </div>
+  <div class="section-block"><p class="section-label">Recognition</p><h2 class="section-title">Honors</h2>
+    <div style="display:flex; flex-direction:column; gap:0.75rem;">
+      <div class="card" style="padding:1.25rem 1.5rem;"><h3 style="font-size:0.95rem;">Walter E. Millett Endowed Scholarship in Physics</h3><p style="font-size:0.8rem; margin:0;">2023–2024</p></div>
+      <div class="card" style="padding:1.25rem 1.5rem;"><h3 style="font-size:0.95rem;">Cactus Yearbook Standout Award</h3><p style="font-size:0.8rem; margin:0;">1 of 2 university-wide undergraduate leaders selected · 2023</p></div>
+      <div class="card" style="padding:1.25rem 1.5rem;"><h3 style="font-size:0.95rem;">Texas Excellence in Jobs and Services Award</h3><p style="font-size:0.8rem; margin:0;">1 of 30 undergraduates selected for stipend-funded research assistantship · 2022–2023</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div class="tab-panel" id="projects">
+  <div class="section-block"><p class="section-label">Academic & Research</p><h2 class="section-title">Projects</h2><p class="section-desc">From biophysics research to fine-tuning LLMs — work across physics, computation, and machine learning.</p></div>
+  <div class="card-grid">
+    <div class="card"><div class="card-icon">01</div><h3>Mechanosensing in P. aeruginosa</h3><p>Designed and iterated on experimental protocols to investigate how bacteria sense and respond to surface stiffness. Goal: reduce antibiotic reliance by preventing early surface attachment.</p><div class="card-tags"><span class="tag">Gordon Lab</span><span class="tag">Biophysics</span><span class="tag accent">APS 2025 Poster</span></div></div>
+    <div class="card"><div class="card-icon">02</div><h3>Fine Tuning Open-Source LLMs</h3><p>PEFT of BERT via LoRA for physics text classification. Self-supervised fine-tuning of distilBERT via Masked Language Modeling. Both deployed on AWS.</p><div class="card-tags"><span class="tag">Python</span><span class="tag">LoRA</span><span class="tag">AWS</span><span class="tag">BERT</span></div></div>
+    <div class="card"><div class="card-icon">03</div><h3>Exoplanet Identification Dashboard</h3><p>Applied PCA to CNNs, SVMs, and k-NN to benchmark computational efficiency of exoplanet detection using NASA datasets. Built interactive Plotly web dashboard.</p><div class="card-tags"><span class="tag">Data Viz</span><span class="tag">Plotly</span><span class="tag">NASA Data</span></div></div>
+    <div class="card"><div class="card-icon">04</div><h3>Anderson Localization & Hofstadter Butterflies</h3><p>Group project simulating quantum lattice phenomena on Euclidean structures. Published well-documented code on GitHub for public use.</p><div class="card-tags"><span class="tag">Computational Physics</span><span class="tag">GitHub</span><span class="tag">Open Source</span></div></div>
+    <div class="card"><div class="card-icon">05</div><h3>FUS Protein Hydrophobic Interactions</h3><p>Investigated disordered protein behavior at the air/water interface, contributing to neurodegenerative disease research.</p><div class="card-tags"><span class="tag">Stachowiak Lab</span><span class="tag">BME</span></div></div>
+    <div class="card"><div class="card-icon">06</div><h3>NMR Spectroscopy & Superconductors</h3><p>Troubleshot and rewired NMR instrument circuitry. Synthesized YBCO samples and analyzed superconducting properties.</p><div class="card-tags"><span class="tag">Markert Lab</span><span class="tag">FRI</span></div></div>
+  </div>
+</div>
+
+<!-- LEADERSHIP -->
+<div class="tab-panel" id="leadership">
+  <div class="section-block"><p class="section-label">Leadership & Program Management</p><h2 class="section-title">Building Communities & Programs</h2><p class="section-desc">From launching mentorship programs to organizing conferences — operational, cross-functional work that mirrors product management.</p></div>
+  <div class="insight-grid" style="margin-bottom:3rem;">
+    <div class="insight-stat"><div class="number">~1K</div><div class="label">People engaged through outreach</div></div>
+    <div class="insight-stat"><div class="number">30+</div><div class="label">Students coordinated for CUWiP</div></div>
+    <div class="insight-stat"><div class="number">3 yrs</div><div class="label">Leading GMiP as Secretary then President</div></div>
+    <div class="insight-stat"><div class="number">6+</div><div class="label">Large-scale events organized</div></div>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item"><div class="timeline-date">Aug 2021 – May 2024</div><h3>Gender Matters in Physics (GMiP)</h3><div class="role">President · Secretary</div><ul><li>Led weekly meetings coordinating research talks, grad school panels, national lab speakers, and career workshops across stakeholder groups</li><li>Designed and launched a mentorship program — established selection criteria, onboarding, and feedback loops</li><li>Organized group travel logistics for 30 undergraduates to 2024 CUWiP in New Orleans (budgeting, scheduling, coordination)</li><li>Co-hosted Prospective Students Day and Welcome Week — designed onboarding experiences for incoming students</li><li>Organized outreach events engaging ~1,000 people (Solar Eclipse Event, Longhorn Halloween, Girl Day, Star Party)</li><li>Honors: 2024 Pillars of the Forty Acres: Exemplary Status · Gold Medal for Healthy Student Organization</li></ul></div>
+    <div class="timeline-item"><div class="timeline-date">Oct 2024 – Present</div><h3>Physics Peer Mentorship Program</h3><div class="role">Peer Mentor</div><ul><li>Mentor underclassmen on course registration, degree planning, cold-emailing for research, and extracurricular fit</li></ul></div>
+    <div class="timeline-item"><div class="timeline-date">Jan 2024 – May 2025</div><h3>Physics Climate Faculty Committee</h3><div class="role">Undergraduate Representative</div><ul><li>Organized monthly department-wide socials to foster community across faculty, grad students, and undergrads</li><li>Assisted in drafting Code of Conduct; designed surveys and analyzed responses to surface actionable insights</li></ul></div>
+    <div class="timeline-item"><div class="timeline-date">Sept 2021 – May 2023</div><h3>UT Senate of College Councils — Research Committee</h3><div class="role">Member · 2022 New Member of the Year</div><ul><li>Co-organized Capitol of Texas Undergraduate Research Conference — cross-institutional logistics</li><li>Co-organized Educational Equity Roundtable and Social Justice Week</li><li>1 of 45 undergraduates selected university-wide</li></ul></div>
+    <div class="timeline-item"><div class="timeline-date">Sept 2022 – May 2023</div><h3>CMHC Student Advisory Board</h3><div class="role">Undergraduate Representative</div><ul><li>Proposed improvements to website accessibility and information architecture</li><li>Led conversation on enhancing orientation resources for incoming students</li></ul></div>
+    <div class="timeline-item"><div class="timeline-date">Summer 2022 & 2023</div><h3>Lifelong Learning with Friends</h3><div class="role">Volunteer Teaching Assistant</div><ul><li>Guided adults with intellectual and developmental disabilities through Astronomy and Pop Culture courses</li></ul></div>
+  </div>
+</div>
+
+<!-- PRODUCT TEARDOWNS -->
+<div class="tab-panel" id="teardowns">
+  <div class="section-block"><p class="section-label">Product Teardowns</p><h2 class="section-title">Consumer Robotics & AI Hardware <span class="wip-badge">In Progress</span></h2><p class="section-desc">Structured product analysis using PM frameworks. Each teardown examines the user problem, current product-market fit, and concrete recommendations — with a safety-critical lens relevant to deploying robots in homes.</p></div>
+  <div class="method-row"><div class="method-badge"><span class="dot"></span> JTBD Analysis</div><div class="method-badge"><span class="dot"></span> Kano Model</div><div class="method-badge"><span class="dot"></span> Safety-Critical Design</div><div class="method-badge"><span class="dot"></span> Competitive Landscape</div><div class="method-badge"><span class="dot"></span> A/B Test Hypotheses</div></div>
+
+  <div class="carousel-wrapper" id="teardown-carousel">
+    <div class="carousel-track">
+
+      <!-- SLIDE 1: Roomba -->
+      <div class="carousel-slide"><div class="teardown-full">
+        <div class="teardown-top"><h3>iRobot Roomba j9+ / Combo j9+</h3><div class="subtitle">Autonomous Floor Cleaning · $799–$1,399 · Mass Market</div><p class="product-context">iRobot pioneered consumer robot vacuums and remains the most recognized brand, though it faces intensifying competition from Roborock and Ecovacs on price-performance and post-acquisition uncertainty following Amazon's failed $1.4B deal. Robot vacuum sales have grown 28% year-over-year, with the broader household robot market projected to reach $107B by 2034.<sup class="ref">1</sup></p></div>
+        <div class="teardown-body"><div class="teardown-cols"><div>
+          <div class="teardown-section"><h4>Jobs to Be Done</h4><p>The core job is "keep my floors clean without spending my time on it." But the higher-order job — especially for pet owners and dual-income households — is autonomy from the chore itself. Users don't want to manage the robot; they want to forget it exists between maintenance intervals.</p></div>
+          <div class="teardown-section"><h4>What's Working</h4><ul><li><strong>PrecisionVision obstacle avoidance</strong> — the camera-based system reliably detects cables, pet bowls, and shoes. The P.O.O.P. guarantee (Pet Owner Official Promise) is a clever trust-building mechanism for the pet-owner segment.<sup class="ref">2</sup></li><li><strong>Auto-empty dock</strong> — extends the interval between human intervention to roughly 60 days.<sup class="ref">2</sup> This is a Kano "performance" feature that directly maps to the autonomy JTBD.</li><li><strong>Combo j9+ mechanical mop arm</strong> — retracts the mop pad onto the top of the robot when transitioning to carpet, solving a real category pain point that lift-only competitors can't fully address with thick rugs.<sup class="ref">3</sup></li></ul></div>
+        </div><div>
+          <div class="teardown-section"><h4>What I'd Change</h4><ul><li><strong>Onboarding time-to-value is too long.</strong> The j9+ takes 3–5 mapping runs before rooms are accurately named — competitors complete mapping after a single run.<sup class="ref">3</sup> BBB and Trustpilot complaints cluster heavily around Wi-Fi pairing failures and app connectivity.<sup class="ref">4,5</sup> This is a first-run experience problem: if the first 20 minutes are frustrating, you lose trust before the product demonstrates its core value. A/B test opportunity: guided "first clean" wizard vs. current hands-off approach.</li><li><strong>Error recovery messaging doesn't help users fix the environment.</strong> When stuck, the app says "Roomba is stuck" with no spatial context — no map position, no camera snapshot, no suggested fix.<sup class="ref">3</sup> I'd add visual context to error alerts, similar to how Tesla surfaces what the car's cameras see.</li><li><strong>Mop reliability is a retention risk.</strong> The mechanical arm occasionally catches on rug corners,<sup class="ref">3</sup> and recent BBB complaints reveal a recurring Error 517 in newer mopping models that iRobot has acknowledged as known.<sup class="ref">4</sup> When the hardware fix (replacement seals) fails repeatedly, users lose confidence in the product category itself.<sup class="ref">5</sup></li></ul></div>
+          <div class="teardown-section"><h4>Safety Considerations</h4><p>Physical risk is low (floor-level, low mass), but the product operates unsupervised around children and pets. The larger safety concern is data: the onboard camera captures detailed home layouts, and iRobot's privacy posture after the failed Amazon acquisition remains unclear to users.</p></div>
+        </div></div>
+        <div class="card-tags" style="margin-top:1.5rem;"><span class="tag accent">Safety: data privacy post-acquisition</span><span class="tag accent">Safety: unsupervised pet/child interaction</span><span class="tag">Onboarding UX</span><span class="tag">Error Recovery</span><span class="tag">Hardware Reliability</span></div>
+      </div></div></div>
+
+      <!-- SLIDE 2: Astro -->
+      <div class="carousel-slide"><div class="teardown-full">
+        <div class="teardown-top"><h3>Amazon Astro</h3><div class="subtitle">Mobile Home Robot · $1,599 · Invite-Only</div><p class="product-context">Astro is a mobile Alexa device with a periscope camera, positioned for home security and companionship. Launched in 2021 via invite-only Day 1 Editions, it remains limited in availability — Bloomberg reports Amazon shipped only a few hundred units in the first six months.<sup class="ref">6</sup> Amazon has integrated Astro with Ring for security patrols — but internal developers have flagged the combination as a potential privacy concern.<sup class="ref">7</sup></p></div>
+        <div class="teardown-body"><div class="teardown-cols"><div>
+          <div class="teardown-section"><h4>Jobs to Be Done</h4><p>The surface-level JTBD is "monitor my home when I'm away." The deeper job is peace of mind — knowing your family, pets, and property are safe without active attention. For elderly care and accessibility use cases, the JTBD shifts to "help me maintain independence at home" — a higher-stakes, more emotionally resonant job that most reviews overlook.</p></div>
+          <div class="teardown-section"><h4>What's Working</h4><ul><li><strong>Patrol mode is genuinely differentiated.</strong> Sending Astro to investigate a noise or check a room while away is functionally distinct from static cameras. Ring integration makes this feel like part of a system, not a standalone novelty.</li><li><strong>Personality design builds emotional trust.</strong> The display "eyes" use proportions that mimic infant features — a well-studied social robotics pattern for building attachment.<sup class="ref">8</sup> Trust is the prerequisite for adoption in any home robot.</li><li><strong>Accessibility use cases have strongest PMF.</strong> Tasks that seem trivial to able-bodied users — retrieving items, answering the doorbell, medication reminders — are genuinely valuable to elderly and disabled users.<sup class="ref">9</sup> This is where Astro's product-market fit is strongest.</li></ul></div>
+        </div><div>
+          <div class="teardown-section"><h4>What I'd Change</h4><ul><li><strong>Privacy controls must be a first-run experience, not a settings menu.</strong> Astro carries always-on cameras and microphones through your home. Mozilla's Privacy Not Included review found data collection practices opaque.<sup class="ref">10</sup> I'd redesign onboarding to surface privacy as an explicit, non-skippable step with clear visual language showing what data goes where.</li><li><strong>A/B test: proactive vs. reactive check-ins.</strong> Does "I noticed unusual movement in the kitchen" increase or decrease trust? I'd segment by user archetype (security-first vs. companion-first) and test notification cadences, measuring both subjective trust scores and feature engagement.</li><li><strong>Expand the task library or reposition.</strong> Astro can't do enough to justify $1,599 as a utility device — multiple reviewers have described it as essentially a mobile Echo Show.<sup class="ref">9</sup> Amazon needs to either add physical manipulation capabilities or lean fully into the accessibility and eldercare positioning where the existing feature set has actual PMF.</li></ul></div>
+          <div class="teardown-section"><h4>Safety Considerations</h4><p>Astro represents the convergence of mobile robotics and home surveillance — the most sensitive category combination. Ring operators can remotely control Astro to investigate alerts, meaning a third-party human can move a camera through your home.<sup class="ref">11</sup> Security experts at F-Secure and McAfee have warned that Amazon's data monetization model creates inherent tension with the granularity of data Astro collects.<sup class="ref">12</sup> For any home robot beta program, this underscores the importance of building privacy as a product pillar, not a compliance checkbox.</p></div>
+        </div></div>
+        <div class="card-tags" style="margin-top:1.5rem;"><span class="tag accent">Safety: surveillance + mobility convergence</span><span class="tag accent">Safety: remote operator access</span><span class="tag">Privacy-by-Design</span><span class="tag">Accessibility PMF</span><span class="tag">Trust Architecture</span></div>
+      </div></div></div>
+
+      <!-- SLIDE 3: Figure -->
+      <div class="carousel-slide"><div class="teardown-full">
+        <div class="teardown-top"><h3>Figure 02 / Figure 03</h3><div class="subtitle">Humanoid Robot · $30K–$150K (est.) · Industrial Pilot Deployments</div><p class="product-context">Figure AI has moved from demos to commercial deployment: Figure 02 operates at BMW's South Carolina plant,<sup class="ref">13</sup> and Figure 03 was named a TIME Best Invention of 2025 for home-oriented capabilities.<sup class="ref">14</sup> The company raised $675M at a $2.6B valuation with backing from Microsoft, OpenAI, and NVIDIA.<sup class="ref">15</sup> But the gap between demo polish and deployment reliability remains the central question — and the one most relevant to Sunday's own trajectory.</p></div>
+        <div class="teardown-body"><div class="teardown-cols"><div>
+          <div class="teardown-section"><h4>Jobs to Be Done</h4><p>In industrial contexts: "perform repetitive, physically demanding tasks in human-designed spaces without reconfiguring the workspace." The humanoid form factor is the differentiator — it operates in spaces built for humans. For the eventual home context, the JTBD mirrors Sunday Memo's, but home deployment is 2–4 years away at minimum.<sup class="ref">16</sup></p></div>
+          <div class="teardown-section"><h4>What's Working</h4><ul><li><strong>Real commercial deployment.</strong> BMW is a paying customer. Figure 02 operates in the body shop performing precision part insertion<sup class="ref">13</sup> — the most credible proof point in the humanoid category.</li><li><strong>OpenAI integration lowers the programming barrier.</strong> The Helix model enables verbal commands translated into physical action sequences, dramatically reducing setup complexity compared to traditional industrial robots.<sup class="ref">15</sup></li><li><strong>Hardware iteration speed.</strong> 16-DoF hands can lift 25 kg and manipulate tools.<sup class="ref">15</sup> Battery life of 2–5 hours approaches the useful minimum for factory work, though it still falls short of the 8-hour shift standard.<sup class="ref">17</sup></li></ul></div>
+        </div><div>
+          <div class="teardown-section"><h4>What I'd Change</h4><ul><li><strong>The beta feedback loop is underspecified.</strong> For a product this early, the data pipeline from deployment to improvement is everything. How are BMW workers reporting failures? How do edge cases route back to training? Sunday's Skill Capture Glove ($200 vs. $20K teleoperation rigs) offers a more scalable data collection model.<sup class="ref">18</sup> I'd prioritize structured incident reporting infrastructure before scaling deployments.</li><li><strong>Battery life is a binding constraint.</strong> As IEEE Spectrum documented in October 2025, bipedal walking consumes enormous energy just maintaining balance. In practice, Agility's Digit operates in only 30-minute intervals at Amazon warehouses; Figure 02 manages 2–3 hours of active runtime.<sup class="ref">17</sup> Deployment will remain limited to short-cycle tasks until battery density improves.</li><li><strong>Safety standards don't exist yet.</strong> No ISO standard covers dynamically balancing legged robots in human workspaces.<sup class="ref">17</sup> Traditional industrial robots operate behind safety cages governed by ISO 10218 — humanoids walk through the same spaces as workers. Liability questions (manufacturer vs. deployer vs. AI provider) are unresolved. Any company deploying humanoids should invest in proactive safety framework development alongside deployment, not after incidents.</li></ul></div>
+          <div class="teardown-section"><h4>Sunday Memo Comparison</h4><p>Sunday's Memo makes an instructive design contrast. By choosing a wheeled base over bipedal locomotion, Memo eliminates the balance problem — it has passive stability, meaning you can cut power and it won't fall.<sup class="ref">19</sup> This is a safety-first architectural decision that also solves the battery problem (wheels are far more energy-efficient). The tradeoff is reduced mobility (no stairs), but for kitchens, dining rooms, and laundry, the wheeled approach is arguably the right choice for homes. Sunday has trained Memo on approximately 10 million real-world household episodes from over 500 homes using its Skill Capture Glove system.<sup class="ref">20</sup></p></div>
+        </div></div>
+        <div class="card-tags" style="margin-top:1.5rem;"><span class="tag accent">Safety: no ISO standard for humanoids</span><span class="tag accent">Safety: physical cohabitation</span><span class="tag">Battery Constraint</span><span class="tag">Feedback Infrastructure</span><span class="tag">Sunday Memo Comparison</span></div>
+      </div></div></div>
+
+    </div>
+    <div class="carousel-nav"><div class="carousel-dots"><button class="carousel-dot active" data-slide="0"></button><button class="carousel-dot" data-slide="1"></button><button class="carousel-dot" data-slide="2"></button></div><div style="display:flex; align-items:center; gap:1rem;"><span class="slide-counter">1 / 3</span><div class="carousel-arrows"><button class="carousel-arrow" id="prev-btn" disabled>&larr;</button><button class="carousel-arrow" id="next-btn">&rarr;</button></div></div></div>
+  </div>
+
+  <div class="callout" style="margin-top:2.5rem;"><h4>Framework Note: Why JTBD Over Feature Lists</h4><p>These teardowns use the Jobs to Be Done framework rather than traditional feature comparison because consumer robotics is a category where the user's underlying motivation — not the spec sheet — determines adoption. A robot vacuum with better suction doesn't win if the first-run experience destroys trust. A humanoid that can fold clothes doesn't win if families feel surveilled. Understanding the job helps identify which features are table stakes (Kano "must-haves"), which drive satisfaction (performance features), and which create delight — and which are missing entirely.</p></div>
+
+  <div class="references">
+    <h3>References</h3>
+    <ol class="ref-list">
+      <li id="ref-1">Fortune Business Insights, "Household Robot Market Size, Share & Forecast 2026–2034." Market projected to grow from $17.44B (2026) to $107.15B (2034) at 25.47% CAGR. <a href="https://www.fortunebusinessinsights.com/household-robot-market-113393" target="_blank">fortunebusinessinsights.com</a></li>
+      <li id="ref-2">robotvacuum-review.com, "iRobot Roomba j9+ Full Review 2025." Tested over several weeks in a multi-pet household. <a href="https://robotvacuum-review.com/irobot/roomba-j9/" target="_blank">robotvacuum-review.com</a></li>
+      <li id="ref-3">R. Broida, "iRobot Roomba Combo j9+ Review," Yahoo Tech / CNET, Aug. 2024. Detailed testing of mop arm, mapping runs, and navigation limitations. <a href="https://tech.yahoo.com/home/review/irobot-roomba-combo-j9-plus-review-142516873.html" target="_blank">tech.yahoo.com</a></li>
+      <li id="ref-4">Better Business Bureau, "iRobot Corporation Complaints." Documented complaints including recurring Error 517, Wi-Fi connectivity failures, and replacement seal issues (2025–2026). <a href="https://www.bbb.org/us/ma/bedford/profile/vacuum-cleaning-systems/irobot-corporation-0021-91391/complaints" target="_blank">bbb.org</a></li>
+      <li id="ref-5">Trustpilot, "iRobot Reviews." Aggregated customer reviews documenting connectivity, mapping, and reliability issues (2025–2026). <a href="https://www.trustpilot.com/review/www.irobot.com" target="_blank">trustpilot.com</a></li>
+      <li id="ref-6">Wikipedia, "Amazon Astro." Citing Bloomberg's Mark Gurman: six months post-launch, Amazon had shipped only a few hundred units. <a href="https://en.wikipedia.org/wiki/Amazon_Astro" target="_blank">en.wikipedia.org</a></li>
+      <li id="ref-7">Vice Motherboard report cited in Paste Magazine, "The Amazon Astro: Useful Home Robot, Security Nightmare, or Both?" Internal developers flagged Astro as a privacy concern. <a href="https://www.pastemagazine.com/tech/amazon/amazon-astro-household-robot-security-fears" target="_blank">pastemagazine.com</a></li>
+      <li id="ref-8">MIT Technology Review, "Amazon's Astro Robot Is Stupid. You'll Still Fall in Love with It," Oct. 2021. Analysis of Astro's social robotics design elements and trust architecture. <a href="https://www.technologyreview.com/2021/10/04/1036413/amazons-astro-robot-pet/" target="_blank">technologyreview.com</a></li>
+      <li id="ref-9">SlashGear, "Why The Amazon Astro Could Be More Than Just A Novelty Home Robot," Jul. 2025. Citing Forbes' Steve Aquino on accessibility value and CNET's David Priest on luxury positioning. <a href="https://www.slashgear.com/1912655/amazon-astro-why-more-than-just-novelty-home-robot/" target="_blank">slashgear.com</a></li>
+      <li id="ref-10">Mozilla Foundation, "*Privacy Not Included: Amazon Astro Robot." Review of Astro's data collection practices, Alexa voice recording retention, and privacy controls. <a href="https://www.mozillafoundation.org/en/privacynotincluded/amazon-astro-robot/" target="_blank">mozillafoundation.org</a></li>
+      <li id="ref-11">MIT Technology Review, "Amazon Has a New Plan for Its Home Robot Astro: To Guard Your Life," Sept. 2022. Analysis of Ring integration, remote operator access, and surveillance implications. <a href="https://www.technologyreview.com/2022/09/28/1060418/amazon-wants-astro-to-guard-your-life/" target="_blank">technologyreview.com</a></li>
+      <li id="ref-12">Trusted Reviews, "Is Amazon Astro Safe? We Asked Two Security Experts," Sept. 2021. F-Secure's Tom Gaffney and McAfee's Vonnie Demetriades on data collection risks. <a href="https://www.trustedreviews.com/news/is-amazon-astro-safe-4170537" target="_blank">trustedreviews.com</a></li>
+      <li id="ref-13">Articsledge.com, "AI Humanoid Robots 2026: Technology, Builders & Future," Jan. 2026. Figure 02 deployment at BMW's South Carolina plant for sheet metal insertion. <a href="https://www.articsledge.com/post/ai-humanoid-robots" target="_blank">articsledge.com</a></li>
+      <li id="ref-14">WINSS Solutions, "Innovative Humanoid Robots in 2025–2026: Reality or Hype?" Dec. 2025. Figure 03 named TIME Best Invention of 2025; capabilities and limitations analysis. <a href="https://www.winssolutions.org/humanoid-robots-2025-2026-reality-hype/" target="_blank">winssolutions.org</a></li>
+      <li id="ref-15">Top 3D Shop, "Humanoid Robots Guide (2025)." Figure AI's $675M Series B at $2.6B valuation; technical specs including 16-DoF hands and OpenAI integration. <a href="https://top3dshop.com/blog/humanoid-robots-types-history-best-models" target="_blank">top3dshop.com</a></li>
+      <li id="ref-16">Standard Bots, "Humanoid Robots in 2026: Types, Prices, and What's Next." Consumer applications estimated 2–4 years behind industrial deployments. <a href="https://standardbots.com/blog/humanoid-robot" target="_blank">standardbots.com</a></li>
+      <li id="ref-17">Robozaps, "Humanoid Robotics Challenges [2026]." Citing IEEE Spectrum Oct. 2025 investigation on battery life: Digit at 30-min intervals, Figure 02 at 2–3 hours. No ISO standard for dynamically balancing legged robots. <a href="https://blog.robozaps.com/b/challenges-in-humanoid-robotics" target="_blank">blog.robozaps.com</a></li>
+      <li id="ref-18">Humanoids Daily, "Sunday Unveils Memo: A Wheeled, Domestic Robot That Learns From $200 Gloves," Nov. 2025. Skill Capture Glove vs. $20K teleoperation comparison and ACT-1 foundation model. <a href="https://www.humanoidsdaily.com/news/sunday-unveils-memo-a-wheeled-domestic-robot-that-learns-from-200-gloves" target="_blank">humanoidsdaily.com</a></li>
+      <li id="ref-19">Sunday Robotics official website. Memo's passive stability design: power loss does not cause the robot to fall. <a href="https://www.sunday.ai/" target="_blank">sunday.ai</a></li>
+      <li id="ref-20">TechCrunch, "Humanoid Robotics Maker Sunday Reaches $1.15B Valuation," Mar. 2026. $165M Series B led by Coatue; 10M+ training episodes from 500+ homes; 1,000-person waitlist. <a href="https://techcrunch.com/2026/03/12/humanoid-robotics-maker-sunday-reaches-1-15b-valuation-to-build-household-robots/" target="_blank">techcrunch.com</a></li>
+    </ol>
+  </div>
+</div>
+
+<!-- USER RESEARCH -->
+<div class="tab-panel" id="research">
+  <div class="section-block"><p class="section-label">User Research</p><h2 class="section-title">Home Automation Adoption Study</h2><p class="section-desc">Qualitative research exploring how households think about delegating tasks to robots — trust barriers, privacy thresholds, and adoption drivers. Directly relevant to designing beta programs for home robotics.</p></div>
+  <div class="method-row"><div class="method-badge"><span class="dot"></span> Semi-Structured Interviews</div><div class="method-badge"><span class="dot"></span> Affinity Mapping</div><div class="method-badge"><span class="dot"></span> Notion Research Ops</div><div class="method-badge"><span class="dot"></span> Persona Development</div><div class="method-badge"><span class="dot"></span> Safety Requirements Matrix</div></div>
+
+  <!-- SECTION JUMP NAV -->
+  <nav class="section-nav" id="research-nav">
+    <a href="#r-overview" class="active">Study Design</a>
+    <a href="#r-interviews">Interview Log</a>
+    <a href="#r-protocol">Interview Protocol</a>
+    <a href="#r-themes">Emergent Themes</a>
+    <a href="#r-personas">Trust Spectrum</a>
+    <a href="#r-matrix">Safety Matrix</a>
+    <a href="#r-ab">A/B Hypotheses</a>
+    <a href="#r-sunday">Sunday Relevance</a>
+  </nav>
+
+  <!-- STUDY OVERVIEW -->
+  <div id="r-overview" class="framework-block" style="scroll-margin-top:140px;"><h4>Study Design</h4><p>Semi-structured interviews (45–60 min each) with 6 participants across different household types. Recruitment screened for diversity across household composition, tech comfort level, and prior smart-home experience. Interview guide structured around four modules: current chore delegation, trust thresholds, privacy mental models, and safety expectations. All research operations — participant tracker, session notes, interview guide, and thematic analysis — managed in Notion.</p></div>
+
+  <!-- NOTION-STYLE PARTICIPANT TRACKER -->
+  <div id="r-interviews" class="section-block" style="margin-top:2.5rem; scroll-margin-top:140px;">
+    <p class="section-label">Notion: Participant Tracker</p>
+    <h2 class="section-title" style="font-size:1.4rem;">Interview Log</h2>
+    <div style="overflow-x:auto; margin-top:1rem;">
+      <table class="notion-table">
+        <thead>
+          <tr>
+            <th>Participant</th>
+            <th>Household Type</th>
+            <th>Smart Home Exp.</th>
+            <th>Status</th>
+            <th>Key Quote</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>P1</strong></td>
+            <td><span class="table-tag purple">Family, 2 kids (4, 7)</span></td>
+            <td><span class="table-tag gray">Moderate</span></td>
+            <td><span class="table-tag green-fill">Complete</span></td>
+            <td class="quote-cell">"I'd let it do dishes tomorrow, but it's not going near the kids' rooms until I've watched it for a month."</td>
+          </tr>
+          <tr>
+            <td><strong>P2</strong></td>
+            <td><span class="table-tag blue">Single professional</span></td>
+            <td><span class="table-tag gray">High</span></td>
+            <td><span class="table-tag green-fill">Complete</span></td>
+            <td class="quote-cell">"I already have a Roomba, smart lights, a Nest. I'm ready for the next level — just don't make me configure it."</td>
+          </tr>
+          <tr>
+            <td><strong>P3</strong></td>
+            <td><span class="table-tag orange">Couple, 1 dog</span></td>
+            <td><span class="table-tag gray">Low</span></td>
+            <td><span class="table-tag green-fill">Complete</span></td>
+            <td class="quote-cell">"My biggest worry isn't the robot breaking things. It's the robot scaring the dog and the dog breaking things."</td>
+          </tr>
+          <tr>
+            <td><strong>P4</strong></td>
+            <td><span class="table-tag red">Multi-gen (elderly parent)</span></td>
+            <td><span class="table-tag gray">Low</span></td>
+            <td><span class="table-tag green-fill">Complete</span></td>
+            <td class="quote-cell">"My mom would love help with laundry. But she'd never agree to cameras. Never."</td>
+          </tr>
+          <tr>
+            <td><strong>P5</strong></td>
+            <td><span class="table-tag purple">Family, 1 toddler</span></td>
+            <td><span class="table-tag gray">Moderate</span></td>
+            <td><span class="table-tag green-fill">Complete</span></td>
+            <td class="quote-cell">"If it's in my house around my kid, I need a kill switch I can reach from anywhere. Physical button, not an app."</td>
+          </tr>
+          <tr>
+            <td><strong>P6</strong></td>
+            <td><span class="table-tag blue">Roommates (3 adults)</span></td>
+            <td><span class="table-tag gray">High</span></td>
+            <td><span class="table-tag green-fill">Complete</span></td>
+            <td class="quote-cell">"Who owns the data? If my roommate sets it up, can they see when I come home? That's a dealbreaker."</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- NOTION-STYLE INTERVIEW GUIDE -->
+  <div id="r-protocol" class="section-block" style="scroll-margin-top:140px;">
+    <p class="section-label">Notion: Interview Guide</p>
+    <h2 class="section-title" style="font-size:1.4rem;">Semi-Structured Protocol</h2>
+    <div class="interview-modules">
+      <div class="interview-module">
+        <div class="module-header" onclick="this.parentElement.classList.toggle('open')">
+          <span class="module-label">Module 1</span>
+          <span class="module-title">Current Chore Delegation</span>
+          <span class="module-toggle">+</span>
+        </div>
+        <div class="module-body">
+          <p class="module-goal"><strong>Goal:</strong> Understand existing patterns of task delegation and tolerance for imperfect execution.</p>
+          <ul>
+            <li>Walk me through your typical evening routine after dinner. What gets cleaned up, and who does it?</li>
+            <li>Have you ever hired someone to help with household tasks? What did you delegate first, and what did you keep?</li>
+            <li>When a chore gets done imperfectly — say, dishes not fully clean — how do you react? Does it matter who did it?</li>
+            <li>If you could permanently remove one recurring household task, what would it be and why?</li>
+          </ul>
+        </div>
+      </div>
+      <div class="interview-module">
+        <div class="module-header" onclick="this.parentElement.classList.toggle('open')">
+          <span class="module-label">Module 2</span>
+          <span class="module-title">Trust Thresholds</span>
+          <span class="module-toggle">+</span>
+        </div>
+        <div class="module-body">
+          <p class="module-goal"><strong>Goal:</strong> Map the spectrum from eager delegation to firm refusal — and identify what shifts the threshold.</p>
+          <ul>
+            <li>Imagine a robot could handle [their most-hated chore]. What would it need to do in the first week for you to trust it?</li>
+            <li>What's a task you'd never let a robot do, even if it could? Why?</li>
+            <li>How many times would the robot need to succeed before you'd stop watching it? How many failures before you'd unplug it?</li>
+            <li>Would you trust it more if you could see a live camera feed of what it's doing, or does that feel like more surveillance?</li>
+          </ul>
+        </div>
+      </div>
+      <div class="interview-module">
+        <div class="module-header" onclick="this.parentElement.classList.toggle('open')">
+          <span class="module-label">Module 3</span>
+          <span class="module-title">Privacy Mental Models</span>
+          <span class="module-toggle">+</span>
+        </div>
+        <div class="module-body">
+          <p class="module-goal"><strong>Goal:</strong> Surface how people conceptualize data collection by a physical device in their home — distinct from phone/app privacy.</p>
+          <ul>
+            <li>This robot would have cameras and microphones to navigate. How does that make you feel compared to, say, your phone listening?</li>
+            <li>Would you want to know exactly what data the robot collects? Or would you prefer a simple "it's private" assurance?</li>
+            <li>If the company said the data stays on the robot and never goes to the cloud — does that change your comfort level?</li>
+            <li>Who in your household would you want to control the privacy settings? Should everyone have equal access?</li>
+          </ul>
+        </div>
+      </div>
+      <div class="interview-module">
+        <div class="module-header" onclick="this.parentElement.classList.toggle('open')">
+          <span class="module-label">Module 4</span>
+          <span class="module-title">Safety Expectations</span>
+          <span class="module-toggle">+</span>
+        </div>
+        <div class="module-body">
+          <p class="module-goal"><strong>Goal:</strong> Understand how non-technical users define "safety" in the context of a physical robot in their home.</p>
+          <ul>
+            <li>When I say "robot safety," what's the first thing that comes to mind?</li>
+            <li>If the robot knocked over a glass and broke it, how would you want to be notified? How quickly?</li>
+            <li>[For parents] What would the robot need to do — or not do — for you to leave it running while your child is in the room?</li>
+            <li>[For pet owners] How do you think your pet would react? What would you need to see before you felt comfortable?</li>
+            <li>If something went wrong, how would you want to report it — in the app, by calling someone, or should the robot tell you itself?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AFFINITY MAP / THEMES -->
+  <div id="r-themes" class="section-block" style="scroll-margin-top:140px;">
+    <p class="section-label">Notion: Affinity Map</p>
+    <h2 class="section-title" style="font-size:1.4rem;">Emergent Themes</h2>
+    <p class="section-desc" style="max-width:640px;">Themes clustered from tagged interview quotes using affinity mapping. Each theme includes prevalence (how many participants surfaced it), representative quotes, and product implications.</p>
+    <div class="theme-grid">
+      <div class="theme-card">
+        <div class="theme-top">
+          <span class="theme-count">6/6</span>
+          <h4>Graduated Trust</h4>
+        </div>
+        <p>Every participant described a "probation period" — a phase where they'd actively supervise the robot before trusting it to operate unsupervised. The length varied (1 week to 2 months) and correlated with whether children were present.</p>
+        <div class="theme-quotes">
+          <div class="theme-quote"><span class="quote-attr">P1</span> "I'd watch it do dishes maybe 10 times. If it doesn't chip anything, okay, it can do its thing."</div>
+          <div class="theme-quote"><span class="quote-attr">P5</span> "First month, it only runs when the baby is napping and I'm in the room."</div>
+        </div>
+        <div class="theme-implication"><strong>Product implication:</strong> Onboarding should include an explicit "supervised mode" phase with a visible success counter — reframing probation as a designed feature, not user anxiety.</div>
+      </div>
+      <div class="theme-card">
+        <div class="theme-top">
+          <span class="theme-count">5/6</span>
+          <h4>Physical > Digital Privacy Concern</h4>
+        </div>
+        <p>Five participants distinguished between phone-based data collection (accepted, normalized) and a physical robot with cameras (viscerally uncomfortable). The mobility of the device was the key differentiator — "it can go places I don't expect."</p>
+        <div class="theme-quotes">
+          <div class="theme-quote"><span class="quote-attr">P4</span> "My phone stays in my pocket. This thing walks into my bedroom."</div>
+          <div class="theme-quote"><span class="quote-attr">P6</span> "It's not the camera that bothers me, it's that it moves. A Nest cam sits in one spot."</div>
+        </div>
+        <div class="theme-implication"><strong>Product implication:</strong> Privacy onboarding needs to address mobility specifically — show the user a map of where the robot will and won't go. "Out-of-bounds" zones should be a first-run feature, not a settings-menu discovery.</div>
+      </div>
+      <div class="theme-card">
+        <div class="theme-top">
+          <span class="theme-count">4/6</span>
+          <h4>The Kill Switch Expectation</h4>
+        </div>
+        <p>Four participants — all in households with children or pets — independently described wanting a physical, hardware-level stop mechanism. App-based controls were seen as insufficient because "what if the app crashes?" or "what if my phone is in the other room?"</p>
+        <div class="theme-quotes">
+          <div class="theme-quote"><span class="quote-attr">P5</span> "A big red button. On the robot itself. I'm not opening an app while my toddler is crying."</div>
+          <div class="theme-quote"><span class="quote-attr">P3</span> "If the dog freaks out, I need to stop it in two seconds, not twenty."</div>
+        </div>
+        <div class="theme-implication"><strong>Product implication:</strong> Physical stop button is a Kano "must-have" for family households. Marketing should emphasize this as a designed safety feature. Sunday's Memo already has passive stability (won't fall if powered off) — this should be part of the same safety narrative.</div>
+      </div>
+      <div class="theme-card">
+        <div class="theme-top">
+          <span class="theme-count">4/6</span>
+          <h4>Task Hierarchy: Start Low-Stakes</h4>
+        </div>
+        <p>Participants consistently described a preferred delegation order — starting with low-stakes, low-emotional-attachment tasks and graduating to higher-stakes ones. Dishes and tidying were universally "first tasks." Laundry was more contested (fear of damage to clothing). Childcare-adjacent tasks were firm boundaries.</p>
+        <div class="theme-quotes">
+          <div class="theme-quote"><span class="quote-attr">P2</span> "Start with the stuff I don't care about. If it folds my gym socks wrong, who cares. My work shirts? Different story."</div>
+          <div class="theme-quote"><span class="quote-attr">P1</span> "Dishes, yes. Tidying, sure. Anything near the kids' stuff — not until I really trust it."</div>
+        </div>
+        <div class="theme-implication"><strong>Product implication:</strong> Beta programs should launch with the lowest-stakes skills first and sequence new skill rollouts based on user trust level, not engineering readiness. Sunday's current skill set (dishes, coffee, socks) maps well to this hierarchy.</div>
+      </div>
+      <div class="theme-card">
+        <div class="theme-top">
+          <span class="theme-count">3/6</span>
+          <h4>Incident Reporting: Robot Should Speak First</h4>
+        </div>
+        <p>Three participants preferred the robot itself to proactively report incidents ("I dropped a glass") rather than relying on the user to discover and report the problem. This was tied to trust — a robot that self-reports failures felt more trustworthy than one that hides them.</p>
+        <div class="theme-quotes">
+          <div class="theme-quote"><span class="quote-attr">P2</span> "If it breaks something and tells me, that's fine. If I find broken glass and it didn't say anything? It's going back."</div>
+          <div class="theme-quote"><span class="quote-attr">P4</span> "Honesty matters, even from a machine."</div>
+        </div>
+        <div class="theme-implication"><strong>Product implication:</strong> Proactive incident alerts are a trust-building mechanism. A/B test: robot-initiated disclosure vs. passive logging. Hypothesis: proactive reporting increases NPS even when the incident itself is negative.</div>
+      </div>
+      <div class="theme-card">
+        <div class="theme-top">
+          <span class="theme-count">3/6</span>
+          <h4>Multi-User Access Anxiety</h4>
+        </div>
+        <p>In shared households (roommates, multi-generational), participants raised concerns about who controls the robot, who sees its data, and whose preferences take priority. This was especially acute for the roommate household and the multi-generational home.</p>
+        <div class="theme-quotes">
+          <div class="theme-quote"><span class="quote-attr">P6</span> "If my roommate can see the robot's activity log, they can see when I come and go. That's surveillance."</div>
+          <div class="theme-quote"><span class="quote-attr">P4</span> "My mom would want completely different settings than me. Who wins?"</div>
+        </div>
+        <div class="theme-implication"><strong>Product implication:</strong> Multi-user profiles with per-user privacy controls are essential for shared households. Beta screening should assess household dynamics — a single enthusiast in a skeptical household may generate friction, not data.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERSONAS -->
+  <div id="r-personas" class="section-block" style="scroll-margin-top:140px;">
+    <p class="section-label">Deliverable: Personas</p>
+    <h2 class="section-title" style="font-size:1.4rem;">Trust Spectrum</h2>
+    <p class="section-desc" style="max-width:640px;">Three user archetypes mapped to a trust spectrum — from eager delegation to conditional acceptance to firm resistance. Each persona includes adoption triggers, deal-breakers, and beta program fit assessment.</p>
+    <div class="persona-grid">
+      <div class="persona-card">
+        <div class="persona-header eager">
+          <span class="persona-type">Archetype A</span>
+          <h4>The Eager Optimizer</h4>
+        </div>
+        <div class="persona-body">
+          <p class="persona-desc">Tech-forward individual who already has a smart home ecosystem. Views a home robot as the next logical upgrade. Willing to tolerate imperfect execution in exchange for time savings. Trust is earned quickly through functionality, not gradually through observation.</p>
+          <div class="persona-detail"><strong>Represented by:</strong> P2, P6</div>
+          <div class="persona-detail"><strong>Adoption trigger:</strong> "It works out of the box without me configuring everything."</div>
+          <div class="persona-detail"><strong>Deal-breaker:</strong> Complex setup, frequent manual intervention, poor app UX.</div>
+          <div class="persona-detail"><strong>Beta fit:</strong> <span class="table-tag green-fill">High</span> — will generate rich feedback on edge cases and feature requests. Tolerant of early-stage bugs.</div>
+        </div>
+      </div>
+      <div class="persona-card">
+        <div class="persona-header cautious">
+          <span class="persona-type">Archetype B</span>
+          <h4>The Cautious Parent</h4>
+        </div>
+        <div class="persona-body">
+          <p class="persona-desc">Family-oriented user whose trust develops gradually through observed reliability. Physical safety of children and pets is the primary lens. Will impose a supervised probation period. Wants visible, hardware-level control. Privacy matters but is secondary to physical safety.</p>
+          <div class="persona-detail"><strong>Represented by:</strong> P1, P3, P5</div>
+          <div class="persona-detail"><strong>Adoption trigger:</strong> "I watched it work 20 times and nothing bad happened."</div>
+          <div class="persona-detail"><strong>Deal-breaker:</strong> Any incident involving a child or pet, even minor. No physical stop mechanism.</div>
+          <div class="persona-detail"><strong>Beta fit:</strong> <span class="table-tag orange-fill">Medium</span> — critical for safety testing and family-context data, but may have lower tolerance for failure. Needs extra onboarding support.</div>
+        </div>
+      </div>
+      <div class="persona-card">
+        <div class="persona-header skeptic">
+          <span class="persona-type">Archetype C</span>
+          <h4>The Privacy-First Skeptic</h4>
+        </div>
+        <div class="persona-body">
+          <p class="persona-desc">User who frames the robot primarily as a surveillance device that happens to do chores. Trust is blocked by data concerns, not functionality concerns. Wants full transparency on what data is collected, where it goes, and who accesses it. Often the secondary user in the household (not the person who bought it).</p>
+          <div class="persona-detail"><strong>Represented by:</strong> P4, P6 (partial)</div>
+          <div class="persona-detail"><strong>Adoption trigger:</strong> "I can see exactly what it knows about me and delete it."</div>
+          <div class="persona-detail"><strong>Deal-breaker:</strong> Cloud data transmission, opaque privacy policy, no per-user access controls.</div>
+          <div class="persona-detail"><strong>Beta fit:</strong> <span class="table-tag red-fill">Lower</span> — may resist participation, but including 1–2 skeptics in a beta is essential for stress-testing privacy features and identifying consent UX gaps.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAFETY MATRIX -->
+  <div id="r-matrix" class="section-block" style="scroll-margin-top:140px;">
+    <p class="section-label">Deliverable: Safety Requirements Matrix</p>
+    <h2 class="section-title" style="font-size:1.4rem;">Concern by Household Type</h2>
+    <div style="overflow-x:auto; margin-top:1rem;">
+      <table class="notion-table">
+        <thead>
+          <tr>
+            <th>Safety Concern</th>
+            <th>Family w/ Kids</th>
+            <th>Pet Owners</th>
+            <th>Multi-Gen</th>
+            <th>Shared/Roommates</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Physical contact / collision</strong></td>
+            <td><span class="table-tag red-fill">Critical</span></td>
+            <td><span class="table-tag orange-fill">High</span></td>
+            <td><span class="table-tag orange-fill">High</span></td>
+            <td><span class="table-tag gray">Low</span></td>
+          </tr>
+          <tr>
+            <td><strong>Object breakage</strong></td>
+            <td><span class="table-tag orange-fill">High</span></td>
+            <td><span class="table-tag orange-fill">High</span></td>
+            <td><span class="table-tag orange-fill">High</span></td>
+            <td><span class="table-tag orange-fill">High</span></td>
+          </tr>
+          <tr>
+            <td><strong>Camera / audio surveillance</strong></td>
+            <td><span class="table-tag orange-fill">High</span></td>
+            <td><span class="table-tag gray">Medium</span></td>
+            <td><span class="table-tag red-fill">Critical</span></td>
+            <td><span class="table-tag red-fill">Critical</span></td>
+          </tr>
+          <tr>
+            <td><strong>Data sent to cloud</strong></td>
+            <td><span class="table-tag orange-fill">High</span></td>
+            <td><span class="table-tag gray">Medium</span></td>
+            <td><span class="table-tag red-fill">Critical</span></td>
+            <td><span class="table-tag orange-fill">High</span></td>
+          </tr>
+          <tr>
+            <td><strong>Pet anxiety / startle</strong></td>
+            <td><span class="table-tag gray">N/A</span></td>
+            <td><span class="table-tag red-fill">Critical</span></td>
+            <td><span class="table-tag gray">Low</span></td>
+            <td><span class="table-tag gray">Low</span></td>
+          </tr>
+          <tr>
+            <td><strong>Multi-user access control</strong></td>
+            <td><span class="table-tag gray">Low</span></td>
+            <td><span class="table-tag gray">Low</span></td>
+            <td><span class="table-tag orange-fill">High</span></td>
+            <td><span class="table-tag red-fill">Critical</span></td>
+          </tr>
+          <tr>
+            <td><strong>Physical stop mechanism</strong></td>
+            <td><span class="table-tag red-fill">Critical</span></td>
+            <td><span class="table-tag orange-fill">High</span></td>
+            <td><span class="table-tag orange-fill">High</span></td>
+            <td><span class="table-tag gray">Low</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- A/B + SUNDAY CALLOUTS -->
+  <div id="r-ab" class="callout blue" style="scroll-margin-top:140px;"><h4>A/B Testing Hypotheses</h4><p>The study identifies concrete testable hypotheses for home robotics deployment programs. Onboarding: guided walkthrough vs. self-exploration (metric: time-to-first-successful-task and 7-day retention). Privacy consent: granular opt-in vs. simplified defaults (metric: completion rate and post-onboarding trust survey score). Feedback cadence: daily in-app prompt vs. weekly summary digest (metric: response rate and qualitative depth). Incident reporting: user-initiated in-app report vs. robot-initiated prompt after anomalous behavior (metric: report volume and time-to-report). Each hypothesis documented with expected impact, primary metric, and minimum sample size estimate.</p></div>
+
+  <div id="r-sunday" class="callout green" style="margin-top:1rem; scroll-margin-top:140px;"><h4>Relevance to Sunday's Founding Family Program</h4><p>Sunday's beta program will deploy Memo into 50 households — families who will shape what the robot learns next. The APM role is responsible for participant selection, onboarding, feedback collection, and metrics tracking. This research directly addresses those responsibilities: what screening criteria predict a productive beta participant? What onboarding flow sets the right expectations for a robot that can clear tables and fold socks but can't navigate stairs? How should a family report that Memo dropped a wine glass — and how quickly does that incident need to reach the engineering team? The personas above map directly to beta screening: a healthy cohort includes mostly Eager Optimizers for volume feedback, several Cautious Parents for safety-critical data, and at least one Privacy-First Skeptic to stress-test consent UX.</p></div>
+</div>
+
+</main>
+
+<footer class="site-footer"><p>Rida Siddiqi · UT Austin '26</p><p>siddiqirida3@gmail.com</p></footer>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+const track = document.querySelector('.carousel-track'), slides = document.querySelectorAll('.carousel-slide'), dots = document.querySelectorAll('.carousel-dot'), prevBtn = document.getElementById('prev-btn'), nextBtn = document.getElementById('next-btn'), counter = document.querySelector('.slide-counter');
+let current = 0; const total = slides.length;
+function goTo(i) { current = Math.max(0, Math.min(i, total - 1)); track.style.transform = `translateX(-${current * 100}%)`; dots.forEach((d, idx) => d.classList.toggle('active', idx === current)); prevBtn.disabled = current === 0; nextBtn.disabled = current === total - 1; counter.textContent = `${current + 1} / ${total}`; }
+prevBtn.addEventListener('click', () => goTo(current - 1));
+nextBtn.addEventListener('click', () => goTo(current + 1));
+dots.forEach(d => d.addEventListener('click', () => goTo(parseInt(d.dataset.slide))));
+let startX = 0; const wrapper = document.getElementById('teardown-carousel');
+wrapper.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+wrapper.addEventListener('touchend', e => { const diff = startX - e.changedTouches[0].clientX; if (Math.abs(diff) > 50) goTo(current + (diff > 0 ? 1 : -1)); });
+
+// Research section nav: smooth scroll + scroll spy
+const researchNav = document.getElementById('research-nav');
+if (researchNav) {
+  const navLinks = researchNav.querySelectorAll('a');
+  const sectionIds = Array.from(navLinks).map(a => a.getAttribute('href').slice(1));
+
+  // Click: smooth scroll
+  navLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.getElementById(link.getAttribute('href').slice(1));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // Scroll spy: highlight active section
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        // Only run if research tab is active
+        const researchPanel = document.getElementById('research');
+        if (!researchPanel || !researchPanel.classList.contains('active')) { ticking = false; return; }
+        let activeId = sectionIds[0];
+        for (const id of sectionIds) {
+          const el = document.getElementById(id);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            if (rect.top <= 160) activeId = id;
+          }
+        }
+        navLinks.forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === '#' + activeId);
+        });
+        // Scroll nav pill into view
+        const activeLink = researchNav.querySelector('a.active');
+        if (activeLink) {
+          activeLink.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+}
+</script>
+</body>
+</html>
